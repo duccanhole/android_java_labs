@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_lab1_1" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.myapplication.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_lab1_2"
+        android:name="com.example.myapplication.ui.lab1_2.Lab1_2Fragment"
+        android:label="Lab 1.2"
+        tools:layout="@layout/fragment_lab1_2" />
 </navigation>
