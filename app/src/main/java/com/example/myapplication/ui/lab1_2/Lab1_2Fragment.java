@@ -31,6 +31,7 @@ public class Lab1_2Fragment extends Fragment {
     private FragmentLab12Binding binding;
     private Button refreshBtn;
     private ListView listView;
+    private TextView textViewStatus;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class Lab1_2Fragment extends Fragment {
 //        lab12ViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         refreshBtn = binding.buttonRefresh;
         listView = binding.listViewRssFeed;
+        textViewStatus = binding.textViewStatus;
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +57,10 @@ public class Lab1_2Fragment extends Fragment {
     }
 
     public void getRssFeed(){
+        textViewStatus.setText("fetching ...");
+        textViewStatus.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+        refreshBtn.setEnabled(false);
         // Create API service
         ApiService apiService = ApiClient.getApiService();
 
@@ -67,10 +73,14 @@ public class Lab1_2Fragment extends Fragment {
 //                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "on response: " + response.isSuccessful());
                 if (response.isSuccessful() && response.body() != null) {
+                    listView.setVisibility(View.VISIBLE);
                     RssFeed rssFeed = response.body();
                     // Process the RSS feed data
                     List<RssItem> items = rssFeed.getChannel().getItems();
                     setListView(items);
+                    textViewStatus.setText("");
+                    textViewStatus.setVisibility(View.GONE);
+                    refreshBtn.setEnabled(true);
                 } else {
                     // Handle error
                 }
@@ -83,6 +93,8 @@ public class Lab1_2Fragment extends Fragment {
 
                 // Handle failure
                 Log.e(TAG, "fail to get :" + t.getMessage());
+                textViewStatus.setText("ERROR: " + t.getMessage());
+                textViewStatus.setVisibility(View.VISIBLE);
             }
         });
     }

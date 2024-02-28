@@ -29,7 +29,7 @@ public class CustomAdapter extends ArrayAdapter<RssItem> {
 
         RssItem currentItem = getItem(position);
 
-        TextView titleTextView = listItemView.findViewById(R.id.titleText);
+        TextView titleTextView = listItemView.findViewById(R.id.titleTextView);
         TextView descriptionTextView = listItemView.findViewById(R.id.subtitleTextView);
 
         if (currentItem != null) {
